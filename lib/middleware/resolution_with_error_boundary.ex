@@ -25,7 +25,7 @@ defmodule GraphQLTools.ResolutionWithErrorBoundary do
   def replace_resolution_middleware(middleware) when is_list(middleware) do
     Enum.map(middleware, fn
       {{Absinthe.Resolution, :call}, resolver} ->
-        {{ResolutionWithErrorBoundary, :call}, resolver}
+        {{__MODULE__, :call}, resolver}
 
       other ->
         other
