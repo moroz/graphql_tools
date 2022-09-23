@@ -1,4 +1,4 @@
-defmodule GraphqlTools.ErrorTypes do
+defmodule GraphQLTools.ErrorTypes do
   use Absinthe.Schema.Notation
 
   enum :validation_type do
