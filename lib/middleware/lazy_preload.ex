@@ -11,7 +11,7 @@ defmodule GraphQLTools.LazyPreload do
       @behaviour Absinthe.Middleware
 
       def call(resolution, opts) do
-        opts = Keyword.put_new(opts, :repo, repo)
+        opts = Keyword.put_new(opts, :repo, unquote(repo))
         GraphQLTools.LazyPreload.call(resolution, opts)
       end
 
