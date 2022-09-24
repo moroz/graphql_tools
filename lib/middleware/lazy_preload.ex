@@ -10,7 +10,7 @@ defmodule GraphQLTools.LazyPreload do
     quote bind_quoted: [repo: repo] do
       @behaviour Absinthe.Middleware
 
-      @repo unquote(repo)
+      @repo repo
 
       def call(resolution, opts) do
         opts = Keyword.put_new(opts, :repo, unquote(repo))
