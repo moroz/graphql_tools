@@ -24,7 +24,8 @@ defmodule GraphqlTools.MixProject do
       {:absinthe, "~> 1.7"},
       {:ecto, "~> 3.0"},
       {:gettext, "~> 0.20.0"},
-      {:plug, "~> 1.13"}
+      {:plug, "~> 1.13"},
+      {:scrivener, "~> 2.7"}
     ]
   end
 end

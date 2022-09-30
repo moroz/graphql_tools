@@ -36,7 +36,10 @@ defmodule GraphQLTools.TransformErrors do
   end
 
   def handle_error(:not_found, _opts) do
-    %{success: false, errors: %{msg: "The requested record could not be found."}}
+    %{
+      success: false,
+      errors: [%{key: "message", message: "The requested record could not be found."}]
+    }
   end
 
   def handle_error(errors, _opts) when is_map(errors) do
@@ -44,7 +47,7 @@ defmodule GraphQLTools.TransformErrors do
   end
 
   def handle_error(str, _opts) when is_binary(str) do
-    %{success: false, errors: %{"msg" => str}}
+    %{success: false, errors: [%{key: "message", message: str}]}
   end
 
   defp transform_errors(changeset, opts) do
