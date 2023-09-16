@@ -47,7 +47,7 @@ defmodule GraphQLTools.LazyPreload do
     value =
       case Map.get(source, assoc_name) do
         %Ecto.Association.NotLoaded{__cardinality__: :one} ->
-          repo.one(Ecto.assoc(source, assoc_name))
+          maybe_fetch_one(source, assoc_name, repo)
 
         %Ecto.Association.NotLoaded{} ->
           source
@@ -72,5 +72,16 @@ defmodule GraphQLTools.LazyPreload do
     preloaded = repo.preload(source, list)
     value = Map.get(preloaded, assoc_name)
     %{res | value: value, state: :resolved}
+  end
+
+  defp maybe_fetch_one(%schema{} = source, assoc_name, repo) do
+    # Get the foreign key name of the association
+    %{owner_key: owner_key} = Ecto.Association.association_from_schema!(schema, assoc_name)
+
+    case Map.get(source, owner_key) do
+      # Do not bother fetching if the foreign key is null
+      nil -> nil
+      _ -> repo.one(Ecto.assoc(source, assoc_name))
+    end
   end
 end
