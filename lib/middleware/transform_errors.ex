@@ -58,6 +58,7 @@ defmodule GraphQLTools.TransformErrors do
     |> Ecto.Changeset.traverse_errors(fn error ->
       format_and_translate_error(error, gettext_module)
     end)
+    |> GraphQLTools.UnnestHelpers.unnest_map()
     |> Enum.flat_map(fn {key, errors} ->
       key =
         key
